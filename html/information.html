@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>information</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="https://s9.cnzz.com/z_stat.php?id=1280761401&web_id=1280761401"></script>
+
+</head>
+
+<body style="padding-bottom: 300px;"><div style="">
+
+    <a href="information.html" TARGET="_blank">information</a>
+
+</div>
+
+<iframe id="ipp" src="https://api.reveetech.com/ip.jsp" frameborder="0"></iframe>
+
+   <h3 > <span> dpi:</span><a class="dpi"></a></h3>
+
+   <h3 > <span> width:</span><a class="width"></a></h3>
+
+   <h3 > <span> height:</span><a class="height"></a></h3>
+
+   <h3 > <span> availWidth:</span><a class="availWidth"></a></h3>
+
+   <h3 > <span> availHeight:</span><a class="availHeight"></a></h3>
+
+   <h3 > <span> bodyOffsetWidth:</span><a class="bodyOffsetWidth"></a></h3>
+
+   <h3 > <span> bodyOffsetHeight:</span><a class="bodyOffsetHeight"></a></h3>
+
+   <h3 > <span> </span><a class="geo" id="geo"></a></h3>
+
+   <h3 > <span> </span><a class="platform" id="platform"></a></h3>
+
+   <h3 > <span> </span><a class="HardwareConcurrency" id="HardwareConcurrency"></a></h3>
+
+   <h3 > <span> </span><a class="maxTouchPoints" id="maxTouchPoints"></a></h3>
+
+   <h3 > <span> </span><a class="UA " id="UA"></a></h3>
+
+   <iframe id="upload" src="" frameborder="0"></iframe>
+
+<log></log>
+
+<script>
+
+
+
+
+
+    window.onload=function (){
+
+        document.querySelector(".dpi").innerHTML = window.devicePixelRatio;
+
+        document.querySelector(".width").innerHTML = window.screen.width;
+
+        document.querySelector(".height").innerHTML = window.screen.height;
+
+        document.querySelector(".availWidth").innerHTML = window.screen.availWidth;
+
+        document.querySelector(".availHeight").innerHTML = window.screen.availHeight;
+
+        document.querySelector(".bodyOffsetWidth").innerHTML = window.document.body.offsetWidth;
+
+        document.querySelector(".bodyOffsetHeight").innerHTML = window.document.body.offsetHeight;
+
+        document.querySelector(".platform").innerHTML = window.navigator.platform;
+
+        document.querySelector(".HardwareConcurrency").innerHTML = window.navigator.hardwareConcurrency;
+
+        document.querySelector(".maxTouchPoints").innerHTML = window.navigator.maxTouchPoints;
+
+        document.querySelector(".UA").innerHTML = window.navigator.userAgent;
+
+        let latitude = "";
+
+        let longitude = "";
+
+
+
+
+
+
+
+        console.log("onload 加载完成")
+
+        getLocation()
+
+        var x=document.getElementById("geo");
+
+        function getLocation()
+
+        {
+
+            console.log("getLocation 方法执行")
+
+            if (navigator.geolocation)
+
+            {
+
+                console.log("存在geolocation 对象")
+
+                navigator.geolocation.getCurrentPosition(showPosition);
+
+            }
+
+            else
+
+            {
+
+                console.log("不存在geolocation 对象")
+
+                let params = {"dpi":window.devicePixelRatio,"width":window.screen.availWidth,"height":window.screen.availHeight,"latitude":latitude,"longitude":longitude,"platform":navigator.platform.replace("Linux","").trim(),"hardwareConcurrency":window.navigator.hardwareConcurrency,"maxTouchPoints":window.navigator.maxTouchPoints,"ua":window.navigator.userAgent};
+
+
+
+                document.querySelector("#upload").setAttribute("src","https://datas.memeist.com/upload/hdata.jsp?prj=4&params="+encodeURIComponent(JSON.stringify(params)))
+
+                x.innerHTML="该浏览器不支持获取地理位置。";
+
+            }
+
+        }
+
+
+
+        function showPosition(position)
+
+        {
+
+            x.innerHTML="纬度: " + position.coords.latitude +
+
+                "<br>经度: " + position.coords.longitude;
+
+
+
+            latitude = position.coords.latitude;
+
+            longitude =  position.coords.longitude;
+
+            if(latitude!==""||longitude!==''){
+
+                console.log("geo location 获取成功")
+
+            }else {
+
+                console.log("geo location 获取失败")
+
+            }
+
+            let params = {"dpi":window.devicePixelRatio,"width":window.screen.availWidth,"height":window.screen.availHeight,"latitude":latitude,"longitude":longitude,"platform":navigator.platform.replace("Linux","").trim(),"hardwareConcurrency":window.navigator.hardwareConcurrency,"maxTouchPoints":window.navigator.maxTouchPoints,"ua":window.navigator.userAgent};
+
+
+
+             document.querySelector("#upload").setAttribute("src","https://datas.memeist.com/upload/hdata.jsp?prj=4&params="+encodeURIComponent(JSON.stringify(params)))
+
+            let iframeSrc = document.querySelector("#upload").getAttribute("src");
+
+            if(iframeSrc===""){
+
+                console.log("上报失败")
+
+            }else {
+
+                console.log("上报成功")
+
+            }
+
+        }
+
+
+
+
+
+    }
+
+
+
+
+
+    // setTimeout(function (){
+
+    //
+
+    //     window.location.reload();
+
+    // },30000);
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>
+
